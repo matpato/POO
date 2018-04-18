@@ -1,0 +1,44 @@
+@startuml
+
+
+DadosSubject -left- DadosObserver
+Dados <--* DadosSubject
+
+DadosObserver <|-- BarraObserver
+DadosObserver <|-- PercentagemObserver
+DadosObserver <|-- TabelaObserver
+
+class Dados {
+valorA: int
+valorB: int
+valorC: int
+}
+
+class DadosSubject {
+observers: ArrayList<DadosObserver>
+dados: Dados
+addObservers(obs: DadosObserver): void
+delObservers(idx: int): void
+setStatus(dados: Dados): void
+getStatus(): Dados
+notifyObservers(): void
+}
+
+abstract class DadosObserver{
+dados: Dados
+update(): void
+}
+
+class TabelaObserver{
+update(): void
+}
+
+class PercentagemObserver{
+update(): void
+}
+
+class BarraObserver{
+update(): void
+}
+
+@enduml

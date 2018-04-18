@@ -1,0 +1,53 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+class Galo{
+ {static}+SIZE:int
+ -totalPlays:int
+ +Galo(firstPlayer:Symbol)
+ +play(lin:int,col:int):boolean
+ +getSymbol(lin:int,col:int):Symbol
+ +isOver():boolean
+ +undo():boolean
+ +setListener(l:Listener)
+ +hasWinner():boolean
+ +getPlayer():int
+}
+Galo o-L- "*" Symbol : -grid
+Galo --> Symbol : -currPlayer
+Galo o-R- State : -state
+Galo *-- "*" Pos : -plays
+Galo --> Listener : ~listener
+
+enum State {
+ RUN
+ WIN
+ TIED
+__
+ +isOver():boolean
+}
+
+enum Symbol {
+ CROSS
+ BALL
+__
+ +other():Symbol
+ +isCross():boolean
+ +getPlayer(): int
+}
+
+interface Listener{
+ +changedSymbol(lin:int,col:int,s:Symbol)
+}
+Galo +-- Listener
+
+class Pos{
+ ~lin:int
+ ~col:int
+ ~Pos(lin:int,col:int)
+}
+Galo +-- Pos
+
+@enduml

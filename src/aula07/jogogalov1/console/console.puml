@@ -1,0 +1,72 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+class FieldView{
+ -label:String
+ -value:String
+ +FieldView(label,top,left,value)
+ +FieldView(top,left,value)
+ +paint()
+ +setValue(txt)
+ -fillValue(txt)
+ +setValue(value)
+}
+View <|-- FieldView
+Window -D[hidden] FieldView
+
+abstract class Tile{
+ +setBackground(color)
+ +paint()
+}
+View <|-- Tile
+
+class TilePanel{
+ -side:int
+ +TilePanel(tilesHeight,tilesWidth,tileSide)
+ +paint()
+ +getModelPosition(line,col):Location
+ +setTile(l,c,t)
+ +getTile(l,c):Tile
+}
+TilePanel o-R- "*" Tile : -tiles
+View <|-- TilePanel
+
+class View{
+ #top:int
+ #left:int
+ #height:int
+ #width:int
+ #bkColor:int
+ +View(top,left,height,width,bkColor)
+ +View(top,left,bkColor)
+ +View()
+ +setOrig(top,left)
+ +setSize(height,width)
+ +addView(v)
+ +repaint()
+ +paint()
+ +clear()
+ +printBox(top,left,height,width,bkColor)
+ #cursor(lin,col):boolean
+ +print(lin,col,c)
+ +print(lin,col,s)
+ +center(height,width)
+ +isOver(other):boolean
+}
+View --> View : parent
+
+class Window{
+ -height:int
+ -width:int
+ +Window(title,height,width)
+ +write(line,col,text,foreground,background)
+ +close()
+ +message(txt)
+ +question(txt):boolean
+}
+Window .> View : <<handle>>
+
+
+@enduml

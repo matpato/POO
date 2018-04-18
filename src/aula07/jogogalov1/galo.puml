@@ -1,0 +1,74 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+package console {
+  class Window
+  class View
+  abstract class Tile
+  class TilePanel
+  class FieldView
+}
+
+package view {
+  class StatusPanel
+  abstract class CellTile
+  class Ball
+  class Cross
+  class Space
+}
+
+package model {
+  class Galo
+  interface Listener
+  enum Symbol
+  enum State
+}
+
+package ctrl {
+  class Game
+}
+
+View <|-- FieldView
+View <|-- Tile
+View <|-- StatusPanel
+
+StatusPanel *-L- FieldView: -currPlayer
+StatusPanel *-L- FieldView: -moves
+
+
+TilePanel o-R- "*" Tile : -tiles
+View <|-- TilePanel
+
+Window .> View : <<handle>>
+
+Game -> Window : "  -win"
+Game *-- Galo : " -model"
+Game *-L- TilePanel : -view
+Game *-R-|> StatusPanel: "      -status"
+Galo *-- "*" Symbol : -grid
+Galo --> Symbol : -currPlayer
+Galo *-- State : -state
+Galo +- Listener
+
+Game ..|> Listener
+
+enum State {
+ RUN
+ WIN
+ TIED
+}
+
+enum Symbol {
+ CROSS
+ BALL
+}
+
+CellTile <|-- Ball
+CellTile <|-- Cross
+CellTile <|-- Space
+Tile <|-- CellTile
+
+
+@enduml

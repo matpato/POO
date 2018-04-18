@@ -1,0 +1,27 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+class Ball{
+ +paint()
+}
+CellTile <|-- Ball
+class Cross{
+ +paint()
+}
+CellTile <|-- Cross
+class Space{
+ +paint()
+}
+CellTile <|-- Space
+abstract class CellTile{
+ {static}+SIZE:int
+ #CellTile()
+}
+
+abstract class console.Tile
+console.Tile <|- CellTile : "       "
+
+
+@enduml

@@ -1,0 +1,29 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+hide empty members
+
+package model {
+  interface Listener
+  class Galo
+  enum Symbol
+}
+
+class Game{
+ +{static}main(args:String[])
+ -run()
+ -playMatch():boolean
+ -startMatch()
+ +changedSymbol(lin:int,col:int,s:Symbol)
+}
+
+Game o-- view.StatusPanel: - status
+
+Game o-- console.Window : -win
+Game o-- Galo : -model
+Game o-- console.TilePanel : -view
+Game --> Symbol : -firstPlayer
+Listener <|.- Game
+Galo +- Listener
+
+@enduml
